@@ -3,15 +3,32 @@ const rectangulo = document.querySelector('#rectangulo');
 const itemXMR = document.querySelector('#item-xmr');
 
 miBoton.addEventListener('click', () => {
-    mostrarRectanguloYItemXMR();
-    agregarAlCarrito();
+    preguntarCantidad();
 });
 
-function mostrarRectanguloYItemXMR() {
-    rectangulo.style.display = 'block'; // Muestra el rectángulo
-    itemXMR.style.display = 'block'; // Muestra el item XMR
+function preguntarCantidad() {
+    const cantidad = parseFloat(prompt('¿Cuántos XMR desea comprar?'));
+    
+    if (!isNaN(cantidad) && cantidad > 0) {
+        const precioXMR = 143.26;
+        const total = (cantidad * precioXMR).toFixed(2);
 
-    // Puedes agregar cualquier otra lógica aquí cuando se muestra el artículo XMR
+        mostrarRectanguloYItemXMR();
+        mostrarMensajeCompraExitosa(cantidad, total);
+        agregarAlCarrito();
+    }
+}
+
+function mostrarRectanguloYItemXMR() {
+    rectangulo.style.display = 'block'; 
+    itemXMR.style.display = 'block'; 
+
+    
+}
+
+function mostrarMensajeCompraExitosa(cantidad, total) {
+    const mensaje = `¡Exitoso! Compraste ${cantidad} XMR. Equivalente: $${total}`;
+    alert(mensaje); 
 }
 
 function agregarAlCarrito() {
@@ -20,12 +37,12 @@ function agregarAlCarrito() {
         precio: 220
     };
 
-    // Obtén el carrito actual del localStorage
+    
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-    // Agrega el nuevo item al carrito
+    
     carrito.push(item);
 
-    // Guarda el carrito actualizado en el localStorage
+    
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
